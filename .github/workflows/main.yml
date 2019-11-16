@@ -15,12 +15,17 @@ jobs:
       run: |
         apt-get update
         apt-get install -y build-essential libssl-dev uuid-dev libgpgme11-dev squashfs-tools libseccomp-dev wget pkg-config git golang-go
+    - name: Download Singularity GitHub Release
+      uses: Legion2/download-release-action@v2.0.0
+      with:
+        repository: sylabs/singularity
+        tag: 3.3.0
+        path: downloads
+        file: singularity-3.3.0.tar.gz
     - name: Install Singularity
-      env: |
-        SINGULARITY_VERSION: 3.3.0
       run: |
-        wget https://github.com/sylabs/singularity/releases/download/v${SINGULARITY_VERSION}/singularity-${SINGULARITY_VERSION}.tar.gz
-        tar -xzf singularity-${SINGULARITY_VERSION}.tar.gz
+        cd downloads
+        tar -xzf singularity-3.3.0.tar.gz
         cd singularity
         ./mconfig
         make -C builddir
