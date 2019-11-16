@@ -1,0 +1,13 @@
+Bootstrap: docker
+From: mariadb:10.3.9
+
+%post
+YOUR_USERNAME="$(whoami)"
+sed -ie "s/^#user.*/user = ${YOUR_USERNAME}/" /etc/mysql/my.cnf
+chmod 1777 /run/mysqld
+
+%runscript
+exec "mysqld" "$@"
+
+%startscript
+exec "mysqld_safe"

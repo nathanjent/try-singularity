@@ -1,0 +1,10 @@
+version: "1.0"
+instances:
+
+  mariadb:
+    build:
+      context: ./mariadb
+    volumes:
+      - ./mariadb/data:/data
+    post:
+      command: ["/bin/bash", "./mariadb/run_post.sh"]

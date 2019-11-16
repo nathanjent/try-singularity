@@ -1,0 +1,10 @@
+# Vagrant
+.vagrant/
+
+# Singularity image
+*.sif
+
+# Singularity Compose
+mariadb/data
+mariadb/dump
+etc.hosts
