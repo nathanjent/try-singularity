@@ -19,10 +19,7 @@ jobs:
         file: singularity-3.3.0.tar.gz
     - name: Install Singularity
       run: |
-        cd downloads
-        mkdir -p singularity
-        tar -xzf singularity-3.3.0.tar.gz
-        cd singularity
+        tar -xzC downloads/singularity-3.3.0.tar.gz .
         ./mconfig
         make -C builddir
         make -C builddir install
