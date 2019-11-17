@@ -20,6 +20,7 @@ jobs:
     - name: Install Singularity
       run: |
         cd downloads
+        mkdir -p singularity
         tar -xzf singularity-3.3.0.tar.gz
         cd singularity
         ./mconfig
