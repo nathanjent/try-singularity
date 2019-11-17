@@ -14,9 +14,11 @@ jobs:
       with:
         name: "go"
         url: https://dl.google.com/go/go1.13.4.linux-amd64.tar.gz
-        pathInArchive: "bin"
+        pathInArchive: "go/bin"
     - name: Go status
-      run: go --version
+      run: |
+        go --version
+        echo $PATH | grep go
     - name: Download Singularity sources from GitHub Release
       uses: Legion2/download-release-action@v2.0.0
       with:
