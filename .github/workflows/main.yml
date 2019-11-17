@@ -28,9 +28,12 @@ jobs:
         cd singularity
         ./mconfig
         make -C builddir
-        make -C builddir install
+        sudo make -C builddir install
     - name: Install Singularity Compose
       run: |
         sudo -H pip3 install singularity-compose
-    - name: Run a one-line script
-      run: echo Build complete!
+    - name: Build the app
+      run: |
+        cd containers
+        singularity-compose build
+
