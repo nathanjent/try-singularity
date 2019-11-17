@@ -9,11 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Add GoLang PPA
-      run: add-apt-repository ppa:longsleep/golang-backports
+    - uses: actions/setup-go@v1.0.0
     - name: Add dependencies
-      run: |
-        apt-get update
+      run: 
         apt-get install -y build-essential libssl-dev uuid-dev libgpgme11-dev squashfs-tools libseccomp-dev wget pkg-config git golang-go
     - name: Download Singularity GitHub Release
       uses: Legion2/download-release-action@v2.0.0
