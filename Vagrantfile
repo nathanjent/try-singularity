@@ -50,25 +50,38 @@ Vagrant.configure("2") do |config|
   SHELL
 
   # Copy the containers directory into home directory
-  config.vm.provision :file, source: './containers', destination: '~/'
+  config.vm.provision :file,
+    source: './containers', destination: '~/'
 
   # Install required applications
-  config.vm.provision :shell, name: 'Singularity Install', path: './singularity_install.sh'
+  config.vm.provision :shell,
+    name: 'Install Build Essential',
+    path: './scripts/install_build_essential.sh'
+  config.vm.provision :shell,
+    name: 'Install Go',
+    path: './scripts/install_go.sh'
+  config.vm.provision :shell,
+    name: 'Download Singularity source',
+    env: { "SINGULARITY_VERSION": "3.5.0" },
+    path: './scripts/download_singularity_source.sh'
+  config.vm.provision :shell,
+    name: 'Install Singularity',
+    env: { "SINGULARITY_VERSION": "3.5.0" },
+    path: './scripts/install_singularity.sh'
+  config.vm.provision :shell,
+    name: 'Singularity Compose',
+    path: './scripts/install_singularity_compose.sh'
 
-  config.vm.provision :shell, name: 'Singularity Compose', path: './singularity_compose.sh'
+  # Build composed containers
+  config.vm.provision :shell,
+    name: 'Singularity Compose',
+    privileged: false,
+    path: './scripts/build_containers.sh'
 
-  # Build MariaDB container
-  # config.vm.provision :shell, name: 'Setup MariaDB Container', privileged: false, path: './mariadb_container.sh'
-  
-  # Build Apache2 container
-  #config.vm.provision :shell, name: 'Setup Apache2 httpd Container', privileged: false, path: './httpd.sh'
-
-  # Compose the simple singularity example
-  # config.vm.provision :shell, name: 'Singularity Compose Simple', path: './compose_simple.sh'
-
-  config.vm.provision :shell, name: 'Compose Apps', privileged: false, inline: <<-SHELL
-    cd ~/containers
-    singularity-compose build
+  config.vm.provision :shell,
+  name: 'Run Compose Apps',
+  inline: <<-SHELL
+    cd containers
     sudo singularity-compose up
   SHELL
 

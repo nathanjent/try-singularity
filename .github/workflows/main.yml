@@ -12,36 +12,38 @@ jobs:
     - uses: actions/setup-go@v1
       with:
         go-version: '1.13'
+    - name: Cache Singularity build
+      uses: actions/cache@1
+      id: singularity-cache
+      with:
+        path: singularity
+        key: ${{ runner.os }}-deb-${{ hashFiles('singularity-*.tar.gz') }}
+        restore-keys: ${{ runner.os }}-deb-
     - name: Download Singularity sources from GitHub Release
+      if: steps.singularity-cache.outputs.cache-hit != 'true'
       uses: Legion2/download-release-action@v2.0.0
       with:
         repository: sylabs/singularity
         tag: v3.5.0
         path: downloads
         file: singularity-3.5.0.tar.gz
-    - name: Dependencies
-      run: |
-        sudo apt-get install -y \
-        uuid-dev \
-        libssl-dev \
-        uuid-dev \
-        libgpgme11-dev \
-        squashfs-tools \
-        libseccomp-dev \
-        pkg-config \
-        python3-setuptools
     - name: Make Install Singularity
+      if: steps.singularity-cache.outputs.cache-hit != 'true'
+      env:
+        SINGULARITY_VERSION:3.5.0
       run: |
-        tar -xzf downloads/singularity-3.5.0.tar.gz
-        cd singularity
-        ./mconfig
-        make -C builddir
-        sudo make -C builddir install
+        scripts/install_singularity.sh
+    - name: Cache Singularity Compose dependencies
+      uses: actions/cache@1
+      id: singularity-compose-cache
+      with:
+        path: /root/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: ${{ runner.os }}-pip-
     - name: Install Singularity Compose
+      if: steps.singularity-compose-cache.outputs.cache-hit != 'true'
       run: |
-        sudo -H pip3 install singularity-compose
+        scripts/install_singularity_compose.sh
     - name: Build the app
       run: |
-        cd containers
-        singularity-compose build
-
+        scripts/build_containers.sh
