@@ -17,7 +17,7 @@ jobs:
         pathInArchive: "go/bin"
     - name: Go status
       run: |
-        go --version
+        go version
         echo $PATH | grep go
     - name: Download Singularity sources from GitHub Release
       uses: Legion2/download-release-action@v2.0.0
