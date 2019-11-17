@@ -21,7 +21,7 @@ jobs:
         file: singularity-3.5.0.tar.gz
     - name: Dependencies
       run:
-        apt-get install -y uuid-dev libssl-dev uuid-dev libgpgme11-dev squashfs-tools libseccomp-dev pkg-config
+        sudo apt-get install -y uuid-dev libssl-dev uuid-dev libgpgme11-dev squashfs-tools libseccomp-dev pkg-config
     - name: Make Install Singularity
       run: |
         tar -xzf downloads/singularity-3.5.0.tar.gz
