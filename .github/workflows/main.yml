@@ -22,8 +22,8 @@ jobs:
     - name: Make Install Singularity
       env:
         SINGULARITY_VERSION: 3.5.0
-      run: sudo bash ./scripts/install_singularity.sh
+      run: bash ./scripts/install_singularity.sh
     - name: Install Singularity Compose
-      run: sudo bash ./scripts/install_singularity_compose.sh
+      run: bash ./scripts/install_singularity_compose.sh
     - name: Build the app
       run: bash ./scripts/build_containers.sh
