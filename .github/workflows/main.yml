@@ -12,15 +12,15 @@ jobs:
     - uses: actions/setup-go@v1
       with:
         go-version: '1.13'
-    - name: Cache Singularity build
-      uses: actions/cache@1
-      id: singularity-cache
-      with:
-        path: singularity
-        key: ${{ runner.os }}-deb-${{ hashFiles('singularity-*.tar.gz') }}
-        restore-keys: ${{ runner.os }}-deb-
+        # - name: Cache Singularity build
+        #   uses: actions/cache@1
+        #   id: singularity-cache
+        #   with:
+        #     path: singularity
+        #     key: ${{ runner.os }}-deb-${{ hashFiles('singularity-*.tar.gz') }}
+        #     restore-keys: ${{ runner.os }}-deb-
     - name: Download Singularity sources from GitHub Release
-      if: steps.singularity-cache.outputs.cache-hit != 'true'
+      # if: steps.singularity-cache.outputs.cache-hit != 'true'
       uses: Legion2/download-release-action@v2.0.0
       with:
         repository: sylabs/singularity
@@ -28,7 +28,7 @@ jobs:
         path: downloads
         file: singularity-3.5.0.tar.gz
     - name: Make Install Singularity
-      if: steps.singularity-cache.outputs.cache-hit != 'true'
+      # if: steps.singularity-cache.outputs.cache-hit != 'true'
       env:
         SINGULARITY_VERSION: 3.5.0
       run: |
