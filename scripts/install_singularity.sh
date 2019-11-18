@@ -3,6 +3,7 @@
 # Install Singularity from source
 
 # Add build dependencies
+DEBIAN_FRONTEND=noninteractive
 sudo apt-get install -y \
     uuid-dev \
     libssl-dev \
