@@ -13,7 +13,7 @@ sudo apt-get install -y \
     pkg-config
 
 if [ ! -d singularity ]; then
-    tar -xzf singularity-${SINGULARITY_VERSION}.tar.gz 
+    tar -xzf "singularity-${SINGULARITY_VERSION}.tar.gz"
     cd singularity
 
     ./mconfig 
