@@ -30,7 +30,7 @@ jobs:
     - name: Make Install Singularity
       if: steps.singularity-cache.outputs.cache-hit != 'true'
       env:
-        SINGULARITY_VERSION:3.5.0
+        SINGULARITY_VERSION: 3.5.0
       run: |
         scripts/install_singularity.sh
     - name: Cache Singularity Compose dependencies
