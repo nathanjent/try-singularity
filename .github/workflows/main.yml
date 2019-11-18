@@ -22,19 +22,8 @@ jobs:
     - name: Make Install Singularity
       env:
         SINGULARITY_VERSION: 3.5.0
-      run: |
-        scripts/install_singularity.sh
+      run: scripts/install_singularity.sh
     - name: Install Singularity Compose
-      if: steps.singularity-compose-cache.outputs.cache-hit != 'true'
-      run: |
-        scripts/install_singularity_compose.sh
-    - name: Cache Singularity Compose dependencies
-      uses: actions/cache@1
-      id: singularity-compose-cache
-      with:
-        path: /root/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: ${{ runner.os }}-pip-
+      run: scripts/install_singularity_compose.sh
     - name: Build the app
-      run: |
-        scripts/build_containers.sh
+      run: scripts/build_containers.sh
