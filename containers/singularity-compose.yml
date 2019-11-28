@@ -6,5 +6,7 @@ instances:
       context: ./mariadb
     volumes:
       - ./mariadb/data:/data
+    ports:
+      - "3306"
     post:
       command: ["/bin/bash", "./mariadb/run_post.sh"]

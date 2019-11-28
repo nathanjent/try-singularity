@@ -1,3 +1,6 @@
+# Packer
+output-*/
+
 # Vagrant
 .vagrant/
 
@@ -5,6 +8,9 @@
 *.sif
 
 # Singularity Compose
-mariadb/data
-mariadb/dump
+**/data
+**/dump
 etc.hosts
+
+# dotenv
+.env

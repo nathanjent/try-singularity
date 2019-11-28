@@ -1,23 +1,7 @@
 #!/bin/sh
 
-# Install Singularity from source
+# Install Singularity
 
-# Add build dependencies
-DEBIAN_FRONTEND=noninteractive
-sudo apt-get install -y \
-    uuid-dev \
-    libssl-dev \
-    uuid-dev \
-    libgpgme11-dev \
-    squashfs-tools \
-    libseccomp-dev \
-    pkg-config
+cd singularity
 
-if [ ! -d singularity ]; then
-    tar -xzf "downloads/singularity-${SINGULARITY_VERSION}.tar.gz"
-    cd singularity
-
-    ./mconfig 
-    make -C builddir 
-    sudo make -C builddir install
-fi
+command -v singularity >/dev/null 2>&1 || make -C builddir install

@@ -19,10 +19,14 @@ jobs:
         tag: v3.5.0
         path: downloads
         file: singularity-3.5.0.tar.gz
-    - name: Make Install Singularity
+    - name: Install Dependencies for Singularity
+      run: sudo bash ./scripts/install_build_dep_singularity.sh
+    - name: Build Singularity
       env:
         SINGULARITY_VERSION: 3.5.0
-      run: bash ./scripts/install_singularity.sh
+      run: bash ./scripts/build_singularity.sh
+    - name: Install Singularity
+      run: sudo bash ./scripts/install_singularity.sh
     - uses: actions/setup-python@v1
       with:
         python-version: '3.x'
