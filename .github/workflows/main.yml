@@ -12,12 +12,12 @@ jobs:
       uses: actions/checkout@v1
     - name: Install Packer
       run: sudo apt-get install -y packer
-    - name: Cache Build
-      id: cache-packer-build
-      uses: actions/cache@v1
-      with:
-        path: output-singularity35-generic-ubuntu1804-hyperv
-        key: ${{ runner.os }}-${{ hashfiles('packer*.json') }}
+      #- name: Cache Build
+      #  id: cache-packer-build
+      #  uses: actions/cache@v1
+      #  with:
+      #    path: output-singularity35-generic-ubuntu1804-hyperv
+      #    key: ${{ runner.os }}-${{ hashfiles('packer*.json') }}
     - name: Packer Build
       if: steps.cache-packer-build.outputs.cache-hit != 'true'
       run: packer build packer-ubuntu-18.04-x64-singularity.json
