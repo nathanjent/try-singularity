@@ -1,0 +1,33 @@
+{
+    "builders": [
+        {
+            "type": "vagrant",
+            "source_path": "generic/ubuntu1804",
+            "provider": "hyperv",
+            "communicator": "ssh",
+            "ssh_username": "vagrant",
+            "ssh_password": "vagrant",
+            "add_force": true,
+            "name": "singularity35-generic-ubuntu1804-hyperv"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "environment_vars": [
+                "SINGULARITY_VERSION=3.5.0",
+                "DEBIAN_FRONTEND=noninteractive"
+            ],
+            "execute_command": "echo 'vagrant' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+            "scripts": [
+                "scripts/install_build_essential.sh",
+                "scripts/install_go.sh",
+                "scripts/download_singularity_source.sh",
+                "scripts/install_build_dep_singularity.sh",
+                "scripts/build_singularity.sh",
+                "scripts/install_singularity.sh",
+                "scripts/install_singularity_compose.sh"
+            ]
+        }
+    ]
+}
